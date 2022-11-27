@@ -80,7 +80,6 @@ const getProducts = async (req, res) => {
   }
 };
 const getMyProducts = async (req, res) => {
-  console.log("user: ", req.user);
   try {
     let products = Product.find({ supplier: req.user._id }).sort({ createdAt: -1 });
 

@@ -1,4 +1,4 @@
-// Gonna Save the file directly to the cloudinary cloud instead of using Middleware as below
+// below code not needed as Saving the file directly to the cloudinary cloud instead of using Middleware as below.
 
 // import multer from "multer";
 // import Datauri from "datauri";
@@ -13,4 +13,3 @@
 //   dUri.format(path.extname(req.file.originalname).toString(), req.file.buffer);
 
 // export { multerUploads, dataUri };
- 

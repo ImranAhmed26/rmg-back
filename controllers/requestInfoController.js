@@ -38,7 +38,6 @@ const getMyRequestInfos = async (req, res) => {
       .populate("user", "name email phone companyName")
       .populate("product", "name")
       .sort({ createdAt: -1 });
-    console.log(getRequests);
     res.status(200).json(getRequests);
   } catch (error) {
     console.log(error);

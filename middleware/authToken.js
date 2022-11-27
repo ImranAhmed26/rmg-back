@@ -4,20 +4,20 @@ import User from "../models/userSchema.js";
 export const validToken = (req) => {
   let token;
 
-  if (req.headers.cookie) {
-    var match = req.headers.cookie.match(new RegExp("(^| )" + "token" + "=([^;]+)"));
+  if (req.headers) {
+    const { authorization } = req.headers;
+    let match = authorization.split(" ")[1];
+    // let match2 = req.headers.cookie.match(new RegExp("(^| )" + "token" + "=([^;]+)"));   // Method using Cookie
     if (match) {
-      token = match[2];
+      // token = match[2]; // Method using Cookie
+      token = match;
     } else {
       console.log("--smt went wrong--");
     }
-    // console.log("Req Headers: ", token);
-    // token = tokenCookie.split("=")[1];
     const decoded = jwt.verify(token, process.env.JWT_ACCESS_TOKEN);
     console.log("Token validation successful");
-    // console.log(decoded);
     return decoded;
-  } else { 
+  } else {
     throw new Error("Not authorized, token failed");
   }
 };
@@ -25,7 +25,6 @@ export const validToken = (req) => {
 export const adminToken = async (req, res, next) => {
   try {
     const data = validToken(req);
-    // console.log("data is: ", data);
     const { _id, type } = data;
     if (type === "admin") {
       req.user = await User.findById(_id).select("-password");

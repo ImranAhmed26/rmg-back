@@ -18,7 +18,7 @@ const DB_URI = process.env.MONGO_URI;
 // Middleware
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: ["http://beta.rmgstock.com", "http://localhost:3000"],
     credentials: true,
   }),
 );

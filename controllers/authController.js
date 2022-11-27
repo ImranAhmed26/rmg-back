@@ -69,20 +69,21 @@ const LoginUser = async (req, res) => {
     if (!matchPassword) res.status(401).send("Password did not match");
 
     const accessToken = jwt.sign({ _id: user._id, type: user.type }, process.env.JWT_ACCESS_TOKEN, {
-      expiresIn: "1d",
+      expiresIn: "7d",
     });
     // Return user token to user excluding pass and send headers
     user.password = undefined;
     user.isActive = undefined;
     user.membershipStatus = undefined;
 
-    res.cookie("token", accessToken, {
-      httpOnly: true,
-      // secure: true, // only works on https // for production
-      //Send User as Json Response
-    });
-    res.json(user);
-    console.log("Login successful")
+    // Method using Cookie
+    // res.cookie("token", accessToken, {
+    //   httpOnly: true,
+    //   // secure: true, // only works on https // for production
+    //   //Send User as Json Response
+    // });
+    res.json({ user, token: accessToken });
+    console.log("Login successful");
   } catch (error) {
     console.log(error);
     return res.status(400).send("Error. Please Try Again");
